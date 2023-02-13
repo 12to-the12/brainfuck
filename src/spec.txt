@@ -1,0 +1,77 @@
+SPECIFICATION FOR CUSTOM ASSEMBLY IMPLEMENTATION
+
+INTRUCTION SET
+
+INC [A/B]
+DEC [A/B]
+SET
+DUPL
+CLR
+
+NOT
+AND
+NAND
+OR
+XOR
+
+ADD regC + regB => regA
+SUB
+MULT
+DIV
+FLR
+MOD
+POW
+
+READ
+ADV
+PUSH
+
+
+
+
+RISC ARCHITECTURE
+
+for RISC-16 developed by Peter Chen
+8 registers
+reg 0 always returns 0
+
+(add)
+add  regC + regB => regA
+
+(add immediate)
+addi regB + imm  => regA
+
+(nand)
+nand regB nd regC=> regA
+
+(load upper immediate)
+lui  padding + imm => regA
+
+(store word)
+sw   regA => mem[imm+regB]
+
+(load word)
+lw   mem[imm+regB] => regA
+
+(branch if equal)
+beq  if regA == regB goto addr+1+imm
+
+(jump and link register)
+jalr goto regB; addr+1 => regA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
