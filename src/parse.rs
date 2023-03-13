@@ -74,7 +74,7 @@ pub fn parse(program : String, slow: bool) {
         if program_pointer == instructions.len() {break}
 
         if slow{
-        let x = time::Duration::from_millis(100);
+        let x = time::Duration::from_millis(10);
         thread::sleep(x);
         }
 
