@@ -28,7 +28,7 @@ fn main() {
     let program: String = fs::read_to_string("code.txt").expect("Unable to read file");
     println!("<start>");
     let start = Instant::now();
-    parse::parse(program.clone(), true, true);
+    parse::parse(program.clone(), false, false);
 
     let duration = start.elapsed();
     println!("Time elapsed is: {:?}", duration);

@@ -8,6 +8,8 @@ import os
 clear = lambda : os.system("clear")
 import time
 
+
+
 def interpret(program, verbose=True):
     program_length = len(program)
     memory = np.zeros( (8), dtype='uint8')
@@ -61,5 +63,5 @@ if __name__ == '__main__':
     start = time.time()
     interpret(program, verbose=False)
     end = time.time()
-    print(f"Time elapsed is: {(end-start)*1_000_000:.3f}µs")
+    print(f"Time elapsed is: {(end-start)*1_000_000:.3f}µs")#
     

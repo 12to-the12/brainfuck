@@ -1,6 +1,8 @@
 use std::{thread, time};
 
 const SLOWDOWN: u64 = 200; // milliseconds stopped for every operation
+const MEMORY_SIZE: usize = 16; // number of memory locations
+
 pub fn parse(program: String, slow: bool, draw: bool) {
     // let ctrl_count = &program.matches('[').count();
     let mut open_stack: Vec<usize> = Vec::new();
@@ -19,7 +21,7 @@ pub fn parse(program: String, slow: bool, draw: bool) {
 
     // let mut position: isize;
 
-    let mut memory: [u8; 16] = [0; 16];
+    let mut memory: [u8; MEMORY_SIZE] = [0; MEMORY_SIZE];
     let mut memory_pointer: usize = 0;
 
     let mut program_pointer: usize = 0;
@@ -71,7 +73,6 @@ pub fn parse(program: String, slow: bool, draw: bool) {
             '.' => print!("{}", memory[memory_pointer] as char),
             _ => (), // bf programs can include any character
         }
-
         program_pointer += 1;
         if program_pointer == instructions.len() {
             break;
