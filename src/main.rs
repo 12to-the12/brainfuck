@@ -1,5 +1,3 @@
-
-
 // instruction set
 // set0  val
 // set1  val
@@ -13,31 +11,32 @@
 // div  -> reg0
 // write (reg0@->  RAM@reg1)
 // read (->reg0   RAM@reg1)
-// 
-// 
-// 
+//
+//
+//
+use std::fs;
+
 extern crate brainfuck;
 use brainfuck::parse;
 // use brainfuck_rust::assembler;
 
 use std::time::Instant;
 
-
-fn main(){
+fn main() {
     // assembler::read_file_string("assembly.txt")
-    let program: String = String::from("+ >>>++<<< [->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<");
+    // let program: String = String::from("+>>>++<<<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]< ");
+    let program: String = fs::read_to_string("code.txt").expect("Unable to read file");
     println!("<start>");
     let start = Instant::now();
-    parse::parse(program.clone(), true);
+    parse::parse(program.clone(), true, true);
 
     let duration = start.elapsed();
     println!("Time elapsed is: {:?}", duration);
-    println!("Time elapsed per op is: {:?}", duration);
-    println!("Operations per second is: {:?} per op", duration);
+    // println!("Time elapsed per op is: {:?}", duration);
+    // println!("Operations per second is: {:?} per op", duration);
 }
 // fn main() {
-    
-    
+
 //     let program: String = String::from("+ >>>++<<< [->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<");
 //     println!("<start>");
 //     let start = Instant::now();
@@ -51,12 +50,12 @@ fn main(){
 //         else {
 //             parse::parse(program.clone(), true);
 //             break;}
-        
+
 //     }
 //     let duration = start.elapsed();
-    
+
 //     println!("Time elapsed is: {:?}", duration);
 //     println!("Time elapsed per op is: {:?}", duration/reps);
 //     println!("Operations per second is: {:?} per op", duration);
-    
+
 // }

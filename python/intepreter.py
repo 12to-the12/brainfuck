@@ -5,7 +5,8 @@ import numpy as np
 
 
 import os
-#import time
+clear = lambda : os.system("clear")
+import time
 
 def interpret(program, verbose=True):
     program_length = len(program)
@@ -49,8 +50,16 @@ def interpret(program, verbose=True):
 
 
         if program_pointer == program_length: executing = False
-    print('<end>')
+    
+    if not verbose: print(memory)
 
 if __name__ == '__main__':
-    program = '++'
-    interpret(program)
+    with open('code.txt', 'r') as f:
+        program = f.read()
+    clear()
+    # program = '+>>>++<<<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]< '
+    start = time.time()
+    interpret(program, verbose=False)
+    end = time.time()
+    print(f"Time elapsed is: {(end-start)*1_000_000:.3f}µs")
+    
