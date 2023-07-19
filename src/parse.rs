@@ -8,6 +8,8 @@ pub fn parse(program: String, slow: bool, draw: bool) {
     let mut open_stack: Vec<usize> = Vec::new();
     let mut close_stack: Vec<usize> = Vec::new();
 
+    let mut printout = String::new();
+
     let instructions = program.clone().into_bytes();
 
     for (index, instr) in instructions.iter().enumerate().rev() {
@@ -25,8 +27,13 @@ pub fn parse(program: String, slow: bool, draw: bool) {
     let mut memory_pointer: usize = 0;
 
     let mut program_pointer: usize = 0;
+    
+    let mut closing_pointer: usize = 0; // dummy value, never used
 
-    let mut closing_pointer: usize = close_stack[0];
+    if close_stack.len() != 0 {
+        println!("setting");
+        closing_pointer = close_stack[0]; // if close stack is empty this can't reference element 0
+    }
 
     // if non zero: ()
     // if zero: GOTO closing bracket & point next opener
@@ -45,7 +52,12 @@ pub fn parse(program: String, slow: bool, draw: bool) {
         match instr {
             '+' => memory[memory_pointer] += 1,
             '-' => memory[memory_pointer] -= 1,
-            '>' => memory_pointer += 1,
+            '>' => {
+                if memory_pointer == MEMORY_SIZE - 1 {
+                    panic!();
+                }
+                memory_pointer += 1
+            }
             '<' => {
                 if memory_pointer == 0 {
                     panic!();
@@ -70,7 +82,7 @@ pub fn parse(program: String, slow: bool, draw: bool) {
                     open_stack.pop();
                 }
             }
-            '.' => print!("{}", memory[memory_pointer] as char),
+            '.' => printout.push(memory[memory_pointer] as char),
             _ => (), // bf programs can include any character
         }
         program_pointer += 1;
@@ -84,6 +96,7 @@ pub fn parse(program: String, slow: bool, draw: bool) {
         }
         if draw {
             print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+            println!("{:?}", printout);
             println!("{:?}", memory);
             println!(" {}^", " ".repeat(memory_pointer * 3));
             println!("");
@@ -97,5 +110,6 @@ pub fn parse(program: String, slow: bool, draw: bool) {
         }
     }
     print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+    println!("{:?}", printout);
     println!("{:?}", memory);
 }

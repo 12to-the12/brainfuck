@@ -17,12 +17,21 @@ pow reg1 * reg0
 div  -> reg0
 write (reg0@->  RAM@reg1)
 read (->reg0   RAM@reg1)\
+print : prints with ASCII
 """
 
 assembly_program = """\
-set0 4
-set1 4
-pow 2
+set0 72
+print
+set0 101
+print
+set0 108
+print
+print
+set0 111
+print
+set0 33
+print
 """
 
 
@@ -47,31 +56,30 @@ zero_B = up + zero + down
 
 
 def assemble(assembly_program):
-    instruction_set = 'set0 set1 clr swap dupl add subt mult pow div write read'
+    instruction_set = 'set0 set1 clr swap dupl add subt mult pow div write read print'
     instruction_set = instruction_set.split()
 
     assembly_program = assembly_program.strip()
     assembly_program = assembly_program.split('\n')
     # assembly_program = list(filter(None , assembly_program) ) # to eliminate empty lines
 
-    print(assembly_program)
     bf = ''
     for instruction in assembly_program:
-        print(instruction)
-    for instruction in assembly_program:
-        print()
+        # print()
         try: instruction, value = instruction.split()
         except: pass
-        print(f"instruction: {instruction}, {value}")
+        # print(f"instruction: {instruction}, {value}")
         value = int(value)
         if not instruction in instruction_set:
             raise Exception(f'invalid instruction \'{instruction}\'')
         match instruction:
             case 'set0':
+                bf += zero
                 bf += value * '+'
 
             case 'set1':
                 bf += up
+                bf += zero
                 bf += value * '+'
                 bf += down
 
@@ -125,6 +133,9 @@ def assemble(assembly_program):
                 bf += value * \
                     '[->+<]>[->> [->+>+<<]>>[-<<+>>]< [-<<<<+>>>>]<<<]<'
             
+            case 'print':
+                bf += '.'
+
             case _:
                 raise Exception(f"invalid instruction {instruction}")
 
@@ -139,4 +150,4 @@ if __name__ == "__main__":
     print(f"output:\n{bf}")
     with open('code.txt', 'w') as f:
         f.write(bf)
-    interpret(bf, verbose=False)
+    # interpret(bf, verbose=False)
